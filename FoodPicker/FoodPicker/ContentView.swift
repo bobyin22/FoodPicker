@@ -27,12 +27,24 @@ struct ContentView: View {
                     .font(.largeTitle)
                     .bold()
                     .foregroundStyle(.green)
+                    .id(selectedFood)
+                    .transition(.asymmetric(
+                        insertion: .opacity
+                            .animation(.easeInOut(duration: 0.5).delay(0.2)),
+                        removal: .opacity
+                            .animation(.easeInOut(duration: 0.4))))
+            } else {
+                EmptyView()
             }
+            
+            selectedFood != .none ? Color.pink : Color.blue //變形動畫，而不是轉場
             
             Button {
                 selectedFood = food.shuffled().filter{ $0 != selectedFood }.first
             } label: {
-                Text(selectedFood == .none ? "告訴我!" : "換一個").frame(width: 200)
+                Text(selectedFood == .none ? "告訴我" : "換一個").frame(width: 200)
+                    .animation(.none, value: selectedFood)
+                    .transformEffect(.identity)
             }
             .padding(.bottom, -15)
             
@@ -51,7 +63,7 @@ struct ContentView: View {
         .buttonStyle(.borderedProminent)
         .buttonBorderShape(.capsule)
         .controlSize(.large)
-        .animation(.easeInOut(duration: 1), value: selectedFood)
+        .animation(.easeInOut(duration: 0.6), value: selectedFood)
     }
 }
 
