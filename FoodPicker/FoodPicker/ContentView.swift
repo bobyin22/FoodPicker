@@ -11,6 +11,7 @@ import SwiftUI
 struct ContentView: View {
     let food = Food.examples
     @State private var selectedFood: Food?
+    @State private var showInfo: Bool = false
     
     var body: some View {
         ScrollView {
@@ -44,39 +45,48 @@ struct ContentView: View {
                                     .animation(.easeInOut(duration: 0.5).delay(0.2)),
                                 removal: .opacity
                                     .animation(.easeInOut(duration: 0.4))))
-                        Image(systemName: "info.circle.fill")
-                            .foregroundColor(.secondary)
+                        Button {
+                            showInfo.toggle()
+                        } label: {
+                            Image(systemName: "info.circle.fill")
+                                .foregroundColor(.secondary)
+                        }.buttonStyle(.plain)
                     }
                     
                     
                     Text("熱量\(selectedFood!.calorie.formatted())")
                         .font(.title2)
+                      
                     
-                    HStack {
-                        VStack(spacing: 12) {
-                            Text("蛋白質")
-                            Text(selectedFood!.protein.formatted() + " g")
+                VStack {
+                    if showInfo {
+                        Grid(horizontalSpacing: 12, verticalSpacing: 12) {
+                            GridRow {
+                                Text("蛋白質")
+                                Text("脂肪")
+                                Text("碳水")
+                            }.frame(minWidth: 40)
+                            
+                            Divider()
+                                .gridCellUnsizedAxes(.horizontal)
+                                .padding(.horizontal, -10)
+                            
+                            GridRow {
+                                Text(selectedFood!.protein.formatted() + " g")
+                                Text(selectedFood!.calorie.formatted() + " g")
+                                Text(selectedFood!.carb.formatted() + " g")
+                            }
                         }
-                        
-                        Divider().padding(.horizontal)
-                        
-                        VStack(spacing: 12) {
-                            Text("脂肪")
-                            Text(selectedFood!.calorie.formatted() + " g")
-                        }
-                        
-                        Divider().frame(width: 1).padding(.horizontal)
-                        
-                        VStack(spacing: 12) {
-                            Text("碳水")
-                            Text(selectedFood!.carb.formatted() + " g")
-                        }
+                        .font(.title3)
+                        .padding(.horizontal)
+                        .padding()
+                        .background(RoundedRectangle(cornerRadius: 8).foregroundColor(Color(.systemBackground)))
+                        .transition(.move(edge: .top).combined(with: .opacity))
                     }
-                    .font(.title3)
-                    .padding()
-                    .background(RoundedRectangle(cornerRadius: 8).foregroundColor(Color(.systemBackground)))
                 }
-                
+                .frame(maxWidth: .infinity)
+                .clipped()
+            }
                 
                 Spacer().layoutPriority(1)
                 
@@ -91,6 +101,7 @@ struct ContentView: View {
                 
                 Button {
                     selectedFood = .none
+                    showInfo = false
                 } label: {
                     Text("重置").frame(width: 200, alignment: .center)
                 }
@@ -103,6 +114,7 @@ struct ContentView: View {
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
             .controlSize(.large)
+            .animation(.spring(dampingFraction: 0.55), value: showInfo)
             .animation(.easeInOut(duration: 0.6), value: selectedFood)
         }.background(Color(.secondarySystemBackground))
     }
