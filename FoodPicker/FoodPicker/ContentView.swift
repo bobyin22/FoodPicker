@@ -8,39 +8,46 @@
 import SwiftUI
 
 
-
 struct ContentView: View {
-    let food = ["漢堡", "沙拉", "披薩", "義大利麵", "雞腿便當", "刀削麵", "火鍋", "牛肉麵", "關東煮"]
-    @State private var selectedFood: String?
+    let food = Food.examples
+    @State private var selectedFood: Food?
     
     var body: some View {
         VStack(spacing:30) {
-            Image("dinner")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+            Group {
+                if selectedFood != .none {
+                    Text("\(selectedFood!.image)")
+                        .font(.system(size: 200))
+                        .minimumScaleFactor(0.1)
+                        .lineLimit(1)
+                } else {
+                    Image("dinner")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                }
+            }.frame(height: 250)
+            
             
             Text("今天吃什麼？")
                 .bold()
             
             if selectedFood != .none {
-                Text(selectedFood ?? "")
+                Text(selectedFood!.name ?? "")
                     .font(.largeTitle)
                     .bold()
                     .foregroundStyle(.green)
-                    .id(selectedFood)
+                    .id(selectedFood!.name)
                     .transition(.asymmetric(
                         insertion: .opacity
                             .animation(.easeInOut(duration: 0.5).delay(0.2)),
                         removal: .opacity
                             .animation(.easeInOut(duration: 0.4))))
-            } else {
-                EmptyView()
-            }
+            } else { EmptyView() }
             
-            selectedFood != .none ? Color.pink : Color.blue //變形動畫，而不是轉場
+            Spacer()
             
             Button {
-                selectedFood = food.shuffled().filter{ $0 != selectedFood }.first
+                selectedFood = food.shuffled().first { $0 != selectedFood }
             } label: {
                 Text(selectedFood == .none ? "告訴我" : "換一個").frame(width: 200)
                     .animation(.none, value: selectedFood)
@@ -57,7 +64,7 @@ struct ContentView: View {
 
         }
         .padding()
-        .frame(maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.secondarySystemBackground))
         .font(.title)
         .buttonStyle(.borderedProminent)
