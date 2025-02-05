@@ -12,6 +12,7 @@
 		4F91A13F2D51F40900AADBD9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F91A13E2D51F40900AADBD9 /* Assets.xcassets */; };
 		4F91A1422D51F40900AADBD9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F91A1412D51F40900AADBD9 /* Preview Assets.xcassets */; };
 		4FC215B82D5302B900AB78A4 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC215B72D5302B900AB78A4 /* Food.swift */; };
+		4FC215BA2D53438A00AB78A4 /* PreviewDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC215B92D53438A00AB78A4 /* PreviewDevice+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		4F91A13E2D51F40900AADBD9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F91A1412D51F40900AADBD9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4FC215B72D5302B900AB78A4 /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
+		4FC215B92D53438A00AB78A4 /* PreviewDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PreviewDevice+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 				4F91A13A2D51F40700AADBD9 /* FoodPickerApp.swift */,
 				4F91A13C2D51F40700AADBD9 /* ContentView.swift */,
 				4FC215B72D5302B900AB78A4 /* Food.swift */,
+				4FC215B92D53438A00AB78A4 /* PreviewDevice+.swift */,
 				4F91A13E2D51F40900AADBD9 /* Assets.xcassets */,
 				4F91A1402D51F40900AADBD9 /* Preview Content */,
 			);
@@ -140,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FC215BA2D53438A00AB78A4 /* PreviewDevice+.swift in Sources */,
 				4F91A13D2D51F40700AADBD9 /* ContentView.swift in Sources */,
 				4F91A13B2D51F40700AADBD9 /* FoodPickerApp.swift in Sources */,
 				4FC215B82D5302B900AB78A4 /* Food.swift in Sources */,
