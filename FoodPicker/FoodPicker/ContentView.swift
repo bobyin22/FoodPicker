@@ -32,19 +32,46 @@ struct ContentView: View {
                 .bold()
             
             if selectedFood != .none {
-                Text(selectedFood!.name ?? "")
-                    .font(.largeTitle)
+                HStack {
+                    Text(selectedFood!.name ?? "")
+                        .font(.largeTitle)
+                        .bold()
+                        .foregroundStyle(.green)
+                        .id(selectedFood!.name)
+                        .transition(.asymmetric(
+                            insertion: .opacity
+                                .animation(.easeInOut(duration: 0.5).delay(0.2)),
+                            removal: .opacity
+                                .animation(.easeInOut(duration: 0.4))))
+                    Image(systemName: "info.circle.fill").foregroundColor(.gray)
+                }
+                
+                
+                Text("熱量\(Int(selectedFood!.calorie))大卡")
+                
+                Grid {
+                    GridRow {
+                        Text("蛋白質")
+                        Text("脂肪")
+                        Text("碳水")
+                    }
                     .bold()
-                    .foregroundStyle(.green)
-                    .id(selectedFood!.name)
-                    .transition(.asymmetric(
-                        insertion: .opacity
-                            .animation(.easeInOut(duration: 0.5).delay(0.2)),
-                        removal: .opacity
-                            .animation(.easeInOut(duration: 0.4))))
-            } else { EmptyView() }
+                    Divider()
+                    GridRow {
+                        Text("\(Int(selectedFood!.protein))")
+                        Text("\(Int(selectedFood!.calorie))")
+                        Text("\(Int(selectedFood!.carb))")
+                    }
+                    Divider()
+                }
+                .font(.title3)
+                .background(Color(.white))
+                .frame(width: 200, height: 100)
+            } else {
+                EmptyView()
+            }
             
-            Spacer()
+            //Spacer()
             
             Button {
                 selectedFood = food.shuffled().first { $0 != selectedFood }
