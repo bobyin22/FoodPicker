@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-extension View {
-    func mainButtonStyle() -> some View {
-        buttonStyle(.borderedProminent)
-        .buttonBorderShape(.capsule)
-        .controlSize(.large)
-    }
-}
-
-
 struct ContentView: View {
     @State private var selectedFood: Food?
     @State private var shouldShowInfo: Bool = false
@@ -41,9 +32,9 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, minHeight: UIScreen.main.bounds.height - 100)
             .font(.title)
             .mainButtonStyle()
-            .animation(.spring(dampingFraction: 0.55), value: shouldShowInfo)
-            .animation(.easeInOut(duration: 0.6), value: selectedFood)
-        }.background(Color(.secondarySystemBackground))
+            .animation(.mySprint, value: shouldShowInfo)
+            .animation(.myEase, value: selectedFood)
+        }.background(Color.bg2)
     }
 }
     
@@ -72,16 +63,11 @@ private extension ContentView {
                 .bold()
                 .foregroundStyle(.green)
                 .id(selectedFood!.name)
-                .transition(.asymmetric(
-                    insertion: .opacity
-                        .animation(.easeInOut(duration: 0.5).delay(0.2)),
-                    removal: .opacity
-                        .animation(.easeInOut(duration: 0.4))))
+                .transition(.delayInsertionOpcaity)
             Button {
                 shouldShowInfo.toggle()
             } label: {
-                Image(systemName: "info.circle.fill")
-                    .foregroundColor(.secondary)
+                Image(systemName: "info.circle.fill").foregroundColor(.secondary)
             }.buttonStyle(.plain)
         }
     }
@@ -101,16 +87,17 @@ private extension ContentView {
                         .padding(.horizontal, -10)
                     
                     GridRow {
-                        Text(selectedFood!.protein.formatted() + " g")
-                        Text(selectedFood!.calorie.formatted() + " g")
-                        Text(selectedFood!.carb.formatted() + " g")
+                        Text(selectedFood!.$protein)
+                        Text(selectedFood!.$fat)
+                        Text(selectedFood!.$carb)
+
                     }
                 }
                 .font(.title3)
                 .padding(.horizontal)
                 .padding()
-                .background(RoundedRectangle(cornerRadius: 8).foregroundColor(Color(.systemBackground)))
-                .transition(.move(edge: .top).combined(with: .opacity))
+                .roundedRectBackground()
+                .transition(.moveUpWithOpacity)
             }
         }
         .frame(maxWidth: .infinity)
@@ -121,8 +108,7 @@ private extension ContentView {
         if selectedFood != .none {
             foodNameView
             
-            Text("熱量\(selectedFood!.calorie.formatted())")
-                .font(.title2)
+            Text("熱量 \(selectedFood!.$calorie)").font(.title2)
             
             foodDetailView
         }
